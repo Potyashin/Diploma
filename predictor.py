@@ -5,12 +5,12 @@ import numpy as np
 from collections import defaultdict
 import time
 import scipy.stats as sps
-from model.py import *
-from training.py import *
+from Diploma.model import *
+from Diploma.training import *
 
 
 class MlpDiffsRTSPredictor:
-  def __init__(self, device='cuda', path='/'):
+  def __init__(self, device='cuda', path='Diploma/'):
     self.path = path
     self.data = self.load_data(self.path + 'data.csv')
     self.data_with_features = self.add_features_to_data(self.data)
