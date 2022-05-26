@@ -21,9 +21,9 @@ class MlpDiffsRTSPredictor:
 
     self.model = RTSNet(in_dim=143, out_dim=1, n_layers=5, p=0.28).to(device)
     if (device == 'cuda'):
-      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cuda'))
+      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cuda.zip'))
     else:
-      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cpu'))
+      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cpu.zip'))
 
 
   def load_data(self, path):
