@@ -121,7 +121,7 @@ class MlpDiffsRTSPredictor:
     return data_with_features
 
 
-  def predict(self):
+  def predict(self, device='cuda'):
     """Предсказывает, увеличится или уменьшится завтра"""
 
     data_test = self.data_with_features.iloc[-1]
