@@ -1,3 +1,7 @@
+import torch
+from torch import nn
+
+
 class RTSNet(nn.Module):
     def __init__(self, p=0.3, in_dim=6, out_dim=3, n_layers=1):
         super(RTSNet, self).__init__()
