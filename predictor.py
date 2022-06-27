@@ -112,13 +112,13 @@ class MlpDiffsRTSPredictor:
     data_with_features = pd.merge(data_with_features, q, left_index=True, right_index=True)
     data_with_features = self.create_rolling_features(data_with_features, shifts=shifts_rolling)
 
-    data_all_with_features['y'] = data_all_with_features['CLOSE'].shift(-1) - data_all_with_features['CLOSE']
+    data_all_with_features['y'] = data_with_features['CLOSE'].shift(-1) - data_with_features['CLOSE']
     data_all_with_features.sort_values('TRADEDATE').dropna(inplace=True)
 
-    self.features = data_with_features.columns.values
+    self.features = data_all_with_features.columns.values
     self.features = self.features[(self.features != 'TRADEDATE') & (self.features != 'y')]
 
-    return data_with_features
+    return data_all_with_features
 
 
   def predict(self, device='cuda'):
