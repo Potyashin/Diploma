@@ -41,7 +41,8 @@ def train(
     scheduler=None,
     num_epochs=50,
     visualize_freq=1,
-    interval_max=2021 * 365 + 126
+    interval_max=2021 * 365 + 126,
+    device='cuda'
 ):
     # global GLOBAL_MAX_F1_VAL
     '''
