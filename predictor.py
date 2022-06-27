@@ -21,7 +21,7 @@ class MlpDiffsRTSPredictor:
 
     self.model = RTSNet(in_dim=143, out_dim=1, n_layers=5, p=0.28).to(device)
     if (device == 'cuda'):
-      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cuda.zip'))
+      self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cuda'))
     else:
       self.model.load_state_dict(torch.load(self.path + 'mlp_diffs_cpu.zip'))
 
@@ -106,14 +106,14 @@ class MlpDiffsRTSPredictor:
 
     data_with_features = self.create_shifted_features(
         data, shifts=shifts, features=['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VALUE']
-      )
+      ).reset_index(drop=True)
     
     q = pd.DataFrame([self.create_date_features(d) for d in data_with_features['TRADEDATE']])
     data_with_features = pd.merge(data_with_features, q, left_index=True, right_index=True)
     data_with_features = self.create_rolling_features(data_with_features, shifts=shifts_rolling)
 
-    # data_all_with_features['y'] = data_all_with_features['CLOSE'].shift(-1) - data_all_with_features['CLOSE']
-    # data_all_with_features.sort_values('TRADEDATE').dropna(inplace=True)
+    data_all_with_features['y'] = data_all_with_features['CLOSE'].shift(-1) - data_all_with_features['CLOSE']
+    data_all_with_features.sort_values('TRADEDATE').dropna(inplace=True)
 
     self.features = data_with_features.columns.values
     self.features = self.features[(self.features != 'TRADEDATE') & (self.features != 'y')]
